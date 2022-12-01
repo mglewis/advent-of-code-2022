@@ -1,9 +1,8 @@
 extern crate argparse;
 use advent_of_code_2022::read_file;
-use days::*;
 use argparse::{ArgumentParser, Store};
+use days::*;
 mod days;
-
 
 fn main() {
     let mut day = 0;

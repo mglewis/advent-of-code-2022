@@ -8,13 +8,19 @@ fn sum_of_snacks(snacks: &str) -> u32 {
 
 pub fn part_a(input: &str) -> u32 {
     let snacks_per_elf = input.split("\n\n").collect::<Vec<&str>>();
-    let calories_per_elf = snacks_per_elf.iter().map(|x| {sum_of_snacks(*x)}).collect::<Vec<u32>>();
+    let calories_per_elf = snacks_per_elf
+        .iter()
+        .map(|x| sum_of_snacks(*x))
+        .collect::<Vec<u32>>();
     *calories_per_elf.iter().max().unwrap()
 }
 
 pub fn part_b(input: &str) -> u32 {
     let snacks_per_elf = input.split("\n\n").collect::<Vec<&str>>();
-    let mut calories_per_elf = snacks_per_elf.iter().map(|x| {sum_of_snacks(*x)}).collect::<Vec<u32>>();
+    let mut calories_per_elf = snacks_per_elf
+        .iter()
+        .map(|x| sum_of_snacks(*x))
+        .collect::<Vec<u32>>();
     calories_per_elf.sort();
     calories_per_elf.iter().rev().take(3).sum::<u32>()
 }
