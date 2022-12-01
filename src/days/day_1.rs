@@ -27,12 +27,8 @@ pub fn part_b(input: &str) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use std::ptr::read;
-
-    use advent_of_code_2022::read_test_file;
-
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
+    use advent_of_code_2022::read_test_file;
 
     #[test]
     fn test_to_u32() {
