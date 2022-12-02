@@ -27,11 +27,13 @@ fn main() {
         panic!("--part parameter must be specified and be set either `a` or `b`");
     }
 
-    let input = read_file(day, part);
+    let input = read_file(day);
 
     let result = match (day, part) {
         (1, 'a') => day_1::part_a(&input),
         (1, 'b') => day_1::part_b(&input),
+        (2, 'a') => day_2::part_a(&input),
+        (2, 'b') => day_2::part_b(&input),
         (_, _) => panic!("Unrecognised day [{}] part [{}]", day, part),
     };
 
