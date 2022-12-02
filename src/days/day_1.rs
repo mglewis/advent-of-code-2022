@@ -51,13 +51,13 @@ mod tests {
 
     #[test]
     fn test_part_a() {
-        let input = read_test_file(1, 'a');
+        let input = read_test_file(1);
         assert_eq!(part_a(&input), 101);
     }
 
     #[test]
     fn test_part_b() {
-        let input = read_test_file(1, 'b');
-        assert_eq!(part_b(&input), 106);
+        let input = read_test_file(1);
+        assert_eq!(part_b(&input), 115);
     }
 }
