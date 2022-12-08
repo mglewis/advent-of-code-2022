@@ -1,5 +1,9 @@
 use std::{env, fs};
 
+pub fn to_u32(i: &str) -> u32 {
+    i.trim().parse::<u32>().unwrap()
+}
+
 pub fn read_file(day: u32) -> String {
     read_file_path(day, vec!["inputs"])
 }

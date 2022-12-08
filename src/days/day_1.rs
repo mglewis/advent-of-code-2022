@@ -1,6 +1,4 @@
-fn to_u32(i: &str) -> u32 {
-    i.trim().parse::<u32>().unwrap()
-}
+use advent_of_code_2022::to_u32;
 
 fn sum_of_snacks(snacks: &str) -> u32 {
     snacks.lines().map(to_u32).sum()
