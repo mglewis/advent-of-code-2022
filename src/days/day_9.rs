@@ -1,10 +1,6 @@
 use advent_of_code_2022::to_u32;
 use std::ops::Add;
-use std::{
-    collections::HashSet,
-    ops::AddAssign,
-    str::FromStr,
-};
+use std::{collections::HashSet, ops::AddAssign, str::FromStr};
 use Direction::{Down, Left, Right, Up};
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
@@ -116,7 +112,7 @@ pub fn unique_coords_visited_by_tail(input: &str, rope_length: usize) -> u32 {
 
     let mut knot_positions: Vec<Coords> = Vec::new();
     for _ in 0..rope_length {
-        knot_positions.push(Coords { x: 0, y: 0});
+        knot_positions.push(Coords { x: 0, y: 0 });
     }
 
     let mut visited_coords: HashSet<Coords> = HashSet::from([*knot_positions.last().unwrap()]);
@@ -131,7 +127,6 @@ pub fn unique_coords_visited_by_tail(input: &str, rope_length: usize) -> u32 {
         }
     }
     visited_coords.len().try_into().unwrap()
-
 }
 
 pub fn part_a(input: &str) -> u32 {

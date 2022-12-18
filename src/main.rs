@@ -9,12 +9,19 @@ use std::fmt;
 #[derive(Debug)]
 enum ReturnType {
     UInt32(u32),
+    Int64(i64),
     String(String),
 }
 
 impl From<u32> for ReturnType {
     fn from(u: u32) -> Self {
         Self::UInt32(u)
+    }
+}
+
+impl From<i64> for ReturnType {
+    fn from(i: i64) -> Self {
+        Self::Int64(i)
     }
 }
 
@@ -28,6 +35,7 @@ impl fmt::Display for ReturnType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             ReturnType::UInt32(value) => write!(f, "{}", value),
+            ReturnType::Int64(value) => write!(f, "{}", value),
             ReturnType::String(value) => write!(f, "{}", value),
         }
     }
@@ -77,6 +85,8 @@ fn main() {
         (8, 'b') => day_8::part_b(&input).into(),
         (9, 'a') => day_9::part_a(&input).into(),
         (9, 'b') => day_9::part_b(&input).into(),
+        (10, 'a') => day_10::part_a(&input).into(),
+        (10, 'b') => day_10::part_b(&input).into(),
         (_, _) => panic!("Unrecognised day [{}] part [{}]", day, part),
     };
 
