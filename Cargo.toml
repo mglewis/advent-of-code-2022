@@ -7,5 +7,12 @@ edition = "2021"
 
 [dependencies]
 argparse = "0.2.2"
-eval = "0.4.3"
+
+# used for day 11
+eval = "0.4.3" 
+
+# used for day 6 and 12
 itertools = "0.10.5"
+
+# used for day 12
+petgraph = "0.6.2"
