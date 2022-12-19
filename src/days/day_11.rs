@@ -54,13 +54,36 @@ fn remove_non_numeric_chars(input: &str) -> String {
     filtered_input.trim().to_string()
 }
 
-fn new_item_worry(item: ItemWorry, operation: &str, relief_divisor: i64) -> ItemWorry {
-    let expression = Expr::new(operation).value("old", item);
-    let worry_during_inspection = expression.exec().ok().and_then(|v| v.as_i64()).unwrap();
-    worry_during_inspection / relief_divisor
+fn parse_monkeys(input: &str) -> Vec<Monkey> {
+    let monkey_strings: Vec<&str> = input.split("\n\n").collect();
+    let monkeys: Vec<Monkey> = monkey_strings
+        .iter()
+        .map(|m| m.parse::<Monkey>().unwrap())
+        .collect();
+    monkeys
 }
 
-fn process_round(input: Vec<Monkey>, relief_divisor: i64) -> Vec<Monkey> {
+fn calc_divisor_common_demoninator(monkeys: &Vec<Monkey>) -> i64 {
+    // this is a hacky workaround for the large numbers we have to deal with
+    // in part b of the problem.
+    monkeys
+        .iter()
+        .map(|m| m.conditional_divisor)
+        .fold(1, |a, b| a * b)
+}
+
+fn new_item_worry(
+    item: ItemWorry,
+    operation: &str,
+    relief_divisor: i64,
+    common_denominator: i64,
+) -> ItemWorry {
+    let expression = Expr::new(operation).value("old", item);
+    let worry_during_inspection = expression.exec().ok().and_then(|v| v.as_i64()).unwrap();
+    (worry_during_inspection / relief_divisor) % common_denominator
+}
+
+fn process_round(input: Vec<Monkey>, relief_divisor: i64, common_denominator: i64) -> Vec<Monkey> {
     // documentation on evaluating the operation string can be found here:
     // https://docs.rs/eval/latest/eval/
     let mut monkeys = input.clone();
@@ -73,7 +96,7 @@ fn process_round(input: Vec<Monkey>, relief_divisor: i64) -> Vec<Monkey> {
         let items: Vec<ItemWorry> = monkey
             .items
             .drain(..)
-            .map(|i| new_item_worry(i, &monkey.operation, relief_divisor))
+            .map(|i| new_item_worry(i, &monkey.operation, relief_divisor, common_denominator))
             .collect();
         monkey.total_inspections += items.len() as i64;
 
@@ -92,14 +115,11 @@ fn process_round(input: Vec<Monkey>, relief_divisor: i64) -> Vec<Monkey> {
 }
 
 pub fn part_a(input: &str) -> i64 {
-    let monkey_strings: Vec<&str> = input.split("\n\n").collect();
-    let mut monkeys: Vec<Monkey> = monkey_strings
-        .iter()
-        .map(|m| m.parse::<Monkey>().unwrap())
-        .collect();
+    let mut monkeys = parse_monkeys(input);
+    let common_demoninator = calc_divisor_common_demoninator(&monkeys);
 
     for _round in 0..20 {
-        monkeys = process_round(monkeys, RELIEF_DIVISOR);
+        monkeys = process_round(monkeys, RELIEF_DIVISOR, common_demoninator);
     }
 
     let mut inspections: Vec<i64> = monkeys.iter().map(|m| m.total_inspections).collect();
@@ -108,7 +128,16 @@ pub fn part_a(input: &str) -> i64 {
 }
 
 pub fn part_b(input: &str) -> i64 {
-    1
+    let mut monkeys = parse_monkeys(input);
+    let common_demoninator = calc_divisor_common_demoninator(&monkeys);
+
+    for _round in 0..10_000 {
+        monkeys = process_round(monkeys, NO_RELIEF_DIVISOR, common_demoninator);
+    }
+
+    let mut inspections: Vec<i64> = monkeys.iter().map(|m| m.total_inspections).collect();
+    inspections.sort();
+    inspections.iter().rev().take(2).product::<i64>()
 }
 
 #[cfg(test)]
@@ -141,8 +170,9 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // ignored as takes 5s. Run with `cargo test -- --ignored`
     fn test_part_b() {
         let input = read_test_file(11);
-        assert_eq!(part_b(&input), 2);
+        assert_eq!(part_b(&input), 2713310158);
     }
 }
