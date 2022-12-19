@@ -87,6 +87,8 @@ fn main() {
         (9, 'b') => day_9::part_b(&input).into(),
         (10, 'a') => day_10::part_a(&input).into(),
         (10, 'b') => day_10::part_b(&input).into(),
+        (11, 'a') => day_11::part_a(&input).into(),
+        (11, 'b') => day_11::part_b(&input).into(),
         (_, _) => panic!("Unrecognised day [{}] part [{}]", day, part),
     };
 

@@ -7,4 +7,5 @@ edition = "2021"
 
 [dependencies]
 argparse = "0.2.2"
+eval = "0.4.3"
 itertools = "0.10.5"
